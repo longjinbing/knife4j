@@ -11,6 +11,7 @@ import {Menu,Input,Select,Table,Tabs,
   Col,Row,AutoComplete,Tooltip,Spin,Badge,Card,
   Collapse,Checkbox,message,Icon
 } from 'ant-design-vue'
+
 Vue.prototype.$message=message;
 Vue.use(Card)
 Vue.use(Badge);

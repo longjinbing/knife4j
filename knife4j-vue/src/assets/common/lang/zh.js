@@ -425,7 +425,7 @@ const langOptions = {
     valueInvalid: '值无效'
   },
   menu: {
-    home: '接口概览',
+    home: '文档概览',
     manager: '文档管理',
     globalsettings: '全局参数设置',
     officeline: '离线文档',

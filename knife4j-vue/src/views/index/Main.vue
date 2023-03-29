@@ -1,13 +1,15 @@
 <template>
   <a-layout-content class="knife4j-body-content">
-    <a-row :gutter="24">
-      <a-col :span="8" v-for="param in swaggerCurrentInstance.pathArrs" :key="param.method" >
-      <a-card :size="small">
-        <h3 class="card-title"><span>{{param.method}}</span></h3>
-        <p class="cart-num-title">数量<span class="cart-num">{{param.count}}</span></p>
-      </a-card>
-      </a-col>
-    </a-row>
+    <a-card :size="small" title="接口数量" :bordered=false>
+      <a-row :gutter="24">
+        <a-col :span="6" v-for="param in swaggerCurrentInstance.pathArrs" :key="param.method" >
+          <div class="card-content">
+            <div class="card-content-method">{{param.method}}</div>
+            <div class="card-content-method-num">{{param.count}}</div>
+          </div>
+        </a-col>
+      </a-row>
+    </a-card>
   </a-layout-content>
 </template>
 <script>
@@ -78,12 +80,29 @@ export default {
   line-height: 40px;
 }
 
-.cart-num{
-  color: #61affe;
-  font-size:30px;
-  padding-left: 50px;
+.card-content{
+  text-align: center;
+  margin:30px auto 40px auto;
 }
-.cart-num-title{
-  vertical-align: middle;
+.card-content-method{
+  font-size:16px;
+  text-align: center;
+  margin: 20px auto;
+  font-weight: 600;
+  width: 80px;
+  line-height: 30px;
+  height:30px;
+  cursor:pointer
+}
+.card-content-method-num{
+  font-size:30px;
+  line-height: 100px;
+  width: 100px;
+  height:100px;
+  border-radius: 50px;
+  background-color: #0059C6;
+  color: #fff;
+  margin: auto;
+  cursor:pointer
 }
 </style>

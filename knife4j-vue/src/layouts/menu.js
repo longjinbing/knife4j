@@ -8,7 +8,7 @@ function isUrl(path) {
 
 const menuData = [{
     key: 'kmain',
-    name: '接口概览',
+    name: '文档概览',
     icon: 'icon-home',
     path: 'home',
   }, {

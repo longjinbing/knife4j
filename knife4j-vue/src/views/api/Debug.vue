@@ -160,7 +160,7 @@
                           <a-input style="width: 80%" :class="'knife4j-debug-param-require' + record.require"
                             :value="record.content" disabled />
                           <a-button v-html="$t('debug.form.upload')" @click="formFileUploadClick(record)"
-                            class="knife4j-api-send" style="width:80px;" type="primary">选择文件</a-button>
+                            class="knife4j-api-send" type="primary">选择文件</a-button>
                         </a-input-group>
                       </div>
                     </div>
