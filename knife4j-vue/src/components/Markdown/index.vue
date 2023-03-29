@@ -5,7 +5,7 @@
 
 <script>
 import { marked } from 'marked';
-import mermaid from 'mermaid';
+// import mermaid from 'mermaid';
 import random from 'lodash/random';
 
 mermaid.initialize({ logLevel: 5 });
@@ -36,16 +36,16 @@ renderer.code = function (code, language) {
         return '<pre><code class="language-' + language + '">' + code + '</code></pre>';
     }
 };
-marked.setOptions({
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false,
-    renderer: renderer
-})
+// marked.setOptions({
+//     gfm: true,
+//     tables: true,
+//     breaks: false,
+//     pedantic: false,
+//     sanitize: false,
+//     smartLists: true,
+//     smartypants: false,
+//     renderer: renderer
+// })
 export default {
     name: "Markdown",
     props: {
@@ -55,7 +55,7 @@ export default {
     },
     computed: {
         markdownSource() {
-            return marked.parse(this.source);
+            // return marked.parse(this.source);
         }
     }
 

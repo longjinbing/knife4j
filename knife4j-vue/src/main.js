@@ -2,23 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-//import './registerServiceWorker'
-//import 'ant-design-vue/dist/antd.css'
 import '@/assets/iconfonts/iconfont.css'
-/* import Antd from 'ant-design-vue' */
 import axios from 'axios'
-import {
-  Icon
-} from 'ant-design-vue'
 
 import {Menu,Input,Select,Table,Tabs,
   Radio,Layout,Button,
   Tag,Divider,Tree,Dropdown,Form,Modal,
   Col,Row,AutoComplete,Tooltip,Spin,Badge,Card,
-  Collapse,Checkbox,message
+  Collapse,Checkbox,message,Icon
 } from 'ant-design-vue'
 Vue.prototype.$message=message;
-//Vue.use(message)
 Vue.use(Card)
 Vue.use(Badge);
 Vue.use(Modal)

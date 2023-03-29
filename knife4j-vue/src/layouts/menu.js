@@ -8,7 +8,7 @@ function isUrl(path) {
 
 const menuData = [{
     key: 'kmain',
-    name: '主页',
+    name: '接口概览',
     icon: 'icon-home',
     path: 'home',
   }, {
@@ -16,32 +16,6 @@ const menuData = [{
     name: 'Swagger Models',
     icon: 'icon-modeling',
     path: 'swaggermodels',
-  }, {
-    key: 'documentManager',
-    name: '文档管理',
-    icon: 'icon-zdlxb',
-    path: 'documentManager',
-    children: [{
-        key: 'anlaysisPage',
-        name: '全局参数设置',
-        component: 'Hello2',
-        path: 'hello'
-      },
-      {
-        key: 'monitorPage',
-        name: '离线文档(Md)',
-        component: 'Hello2',
-        path: 'hello1'
-      },
-      {
-        key: 'workspacePage',
-        name: '个性化设置',
-        component: 'Hello2',
-        path: 'hello2'
-        // hideInBreadcrumb: true,
-        // hideInMenu: true,
-      }
-    ]
   },
   {
     key: 'dashboard',

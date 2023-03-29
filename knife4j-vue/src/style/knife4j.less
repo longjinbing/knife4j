@@ -1,6 +1,5 @@
 @import "~ant-design-vue/dist/antd.less";
-//@import "~ant-design-vue/lib/style/themes/default.less";
-
+@blue-6:#0059c6;
 @contentHeight: calc(100vh - 64px);
 @contentAllHeight: calc(100vh);
 @DebugContentBodyHeight: calc(100vh - 395px);
@@ -8,259 +7,46 @@
 @headerCollapsedWidth: calc(100vw - 80px);
 @contentTabHeight: calc(100vh - 152px);
 /* @GlobalBackgroundColor: #252728; */
-@GlobalBackgroundColor: #1e282c;
-@GlobalSubMenuBackgroundColor: #2c3b41;
+@GlobalBackgroundColor: #001529;
+@GlobalSubMenuBackgroundColor: #001529;
 
 .knife4j {
   padding: 0px;
 }
-
-
-/**
-* -----------------------------
-* 左侧菜单部分样式
-* ------------------------------
-*/
-
-.knife4j-menu {
-  height: @contentHeight;
-  overflow: auto;
-  /* background: #161718; */
-  background: @GlobalBackgroundColor;
-
-  ul {
-    background: @GlobalBackgroundColor;
-  }
-
-  li {
-    /*  background: @GlobalBackgroundColor; */
-    /* background: @GlobalSubMenuBackgroundColor; */
-  }
-
-  .ant-menu-dark .ant-menu-inline.ant-menu-sub {
-    /* background: @GlobalBackgroundColor; */
-    background: @GlobalSubMenuBackgroundColor;
-
-    li {
-      /* background: @GlobalSubMenuBackgroundColor; */
-    }
-  }
-
-
-}
-
-
-.knife4j-menu::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 6px;
-  /*高宽分别对应横竖滚动条的尺寸*/
-  height: 0.5px;
-}
-
-.knife4j-menu::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #469aed;
-}
-
-.knife4j-menu::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  background: #001529;
-}
-
-
-.knife4j-menu-all {
-  height: @contentAllHeight;
-  overflow: auto;
-  /* background: #161718; */
-  background: @GlobalBackgroundColor;
-
-  ul {
-    background: @GlobalBackgroundColor;
-  }
-
-  li {
-    /*  background: @GlobalBackgroundColor; */
-    /* background: @GlobalSubMenuBackgroundColor; */
-  }
-
-  .ant-menu-dark .ant-menu-inline.ant-menu-sub {
-    /* background: @GlobalBackgroundColor; */
-    background: @GlobalSubMenuBackgroundColor;
-
-    li {
-      /* background: @GlobalSubMenuBackgroundColor; */
-    }
-  }
-
-
-}
-
-
-.knife4j-menu-all::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 6px;
-  /*高宽分别对应横竖滚动条的尺寸*/
-  height: 0.5px;
-}
-
-.knife4j-menu-all::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #469aed;
-}
-
-.knife4j-menu-all::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  background: #001529;
-}
-
-
-.ant-menu-dark,
-.ant-menu-dark .ant-menu-sub {
-  background: @GlobalBackgroundColor;
-}
-
-.knife4j-menu-api-deprecated {
-  text-decoration: line-through;
-}
-
-
-.knife4j-menu-line {
-  /* left: 10px; 
-  position: absolute;
-  */
-  width: 65px;
-  display: inline-block;
-
-}
-
-.knife4j-menu-left-style {
-  margin-left: -12px;
-}
-
-.knife4j-menu-badge-num {
-  float: right;
-  margin-top: 12px;
-  margin-right: 10px;
-  z-index: auto;
-  min-width: 16px;
-  height: 16px;
-  padding: 0px 4px;
-  color: #fff;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-  white-space: nowrap;
-  text-align: center;
-  background: #4c96e8;
-  border-radius: 24px;
-  -webkit-box-shadow: 0 0 0 1px #fff;
-  box-shadow: 0 0 0 1px #fff;
-  position: absolute;
-  right: 25px;
-}
-
-.knife4j-menu-badge-num-style {
-  background: #fff;
-  color: #999;
-  box-shadow: 0 0 0 1px #d9d9d9 inset;
-}
-
 /**
 * -----------------------------
 * 覆盖antd部分样式
 * ------------------------------
 */
-
-
-.knife4j-logo {
-  height: 64px;
-  position: relative;
-  line-height: 64px;
-  padding-left: (@menu-collapsed-width - 32px) / 2;
-  transition: all 0.3s;
-  background: @GlobalBackgroundColor;
-  overflow: hidden;
-
-  img {
-    display: inline-block;
-    vertical-align: middle;
-    height: 32px;
-  }
-
-  h1 {
-    color: white;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 20px;
-    margin: 0 0 0 12px;
-    font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica,
-      sans-serif;
-    font-weight: 600;
-  }
+.ant-layout-header{
+  padding: 0;
 }
-
-
-.knife4j-logo-data {
-  height: 64px;
-  position: relative;
-  line-height: 64px;
-  padding-left: (@menu-collapsed-width - 48px) / 2;
-  transition: all 0.3s;
-  background: @GlobalBackgroundColor;
-  overflow: hidden;
-
-  img {
-    display: inline-block;
-    vertical-align: middle;
-    height: 32px;
-  }
-
-  h1 {
-    color: white;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 20px;
-    margin: 0 0 0 12px;
-    font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica,
-      sans-serif;
-    font-weight: 600;
-  }
-}
-
 
 /**
 * -----------------------------
 * 顶部Header部分样式
 * ------------------------------
 */
-.knife4j-header-title {
-  font-size: 20px;
-  font-weight: 400;
-}
+// .knife4j-header-title {
+//   font-size: 20px;
+//   font-weight: 400;
+// }
 
 
-.knife4j-header-default {
-  position: fixed;
-  z-index: 999;
-}
+// .knife4j-header-default {
+//   position: fixed;
+//   z-index: 999;
+// }
 
-.knife4j-header-width {
-  width: @headerDefaultWidth;
-  max-width: @headerDefaultWidth;
-}
+// .knife4j-header-width {
+//   width: @headerDefaultWidth;
+//   max-width: @headerDefaultWidth;
+// }
 
-.knife4j-header-width-collapsed {
-  width: @headerCollapsedWidth;
-  max-width: @headerCollapsedWidth;
-}
+// .knife4j-header-width-collapsed {
+//   width: @headerCollapsedWidth;
+//   max-width: @headerCollapsedWidth;
+// }
 
 
 /**
@@ -268,15 +54,17 @@
 * tab选项卡部分样式
 * ------------------------------
 */
-
+.knife4j-logo-data{
+  padding: 20px 20px;
+}
 .knife4j-tab {
-  padding: 5px 5px 0;
   left: 4px;
   top: 5px;
   background: white;
 
   .ant-tabs-nav-container {
     font-size: 12px;
+    margin-top: 10px;
   }
 
   .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
@@ -346,7 +134,7 @@
 }
 
 .knife4j-request-query {
-  color: #61affe;
+  color: #0059C6;
 }
 
 .knife4j-request-body {
@@ -444,11 +232,11 @@
 }
 
 .knife4j-api-get {
-  border-color: #61affe;
+  border-color: #0059C6;
   background: rgba(97, 175, 254, 0.1);
 
   .knife4j-api-summary-method {
-    background: #61affe;
+    background: #0059C6;
   }
 }
 
@@ -542,16 +330,16 @@
 }
 
 .knife4j-debug-api-get {
-  border-color: #61affe;
+  border-color: #0059C6;
 
   .knife4j-api-summary-method {
-    background: #61affe;
+    background: #0059C6;
     height: 31px;
     margin-top: 0.6px;
   }
 
   .ant-input-group-addon {
-    background: #61affe;
+    background: #0059C6;
 
     .ant-select-selection-selected-value {
       color: #FFF;

@@ -84,7 +84,7 @@ export default {
   font-weight: 600;
   height: 30px;
   line-height: 30px;
-  border-left: 4px solid #00ab6d;
+  border-left: 4px solid #0059C6;
   text-indent: 8px;
 }
 </style>

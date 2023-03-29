@@ -94,11 +94,11 @@ export const resumecss = `
 }
 
 .knife4j-api-get {
-  border-color: #61affe;
+  border-color: #0059C6;
   background: rgba(97, 175, 254, 0.1);
 }
 .knife4j-api-get .knife4j-api-summary-method {
-  background: #61affe;
+  background: #0059C6;
 }
 .knife4j-api-head {
   border-color: #9012fe;
@@ -144,7 +144,7 @@ export const resumecss = `
 #knife4jDoc ul li:before {
   counter-increment: ordered;
   content: counters(ordered,".")" ";
-  color:#1890ff;
+  color:#0067DE;
 }
 .api-basic {
   padding: 11px;
@@ -194,7 +194,7 @@ export const resumecss = `
   font-weight: 600;
   height: 30px;
   line-height: 30px;
-  border-left: 4px solid #00ab6d;
+  border-left: 4px solid #0059C6;
   text-indent: 8px;
 }
 .content-line {

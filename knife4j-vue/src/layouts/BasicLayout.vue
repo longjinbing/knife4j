@@ -2,18 +2,11 @@
   <div class="BasicLayout">
     <a-layout class="ant-layout-has-sider">
       <a-layout-sider :trigger="null" collapsible :collapsed="collapsed" breakpoint="lg" @collapse="handleMenuCollapse"
-        :width="menuWidth" class="sider" style="background: #1e282c;">
+        :width="menuWidth" class="sider">
         <div class="knife4j-logo-data" key="logo" v-if="!collapsed && settings.enableGroup">
-          <a to="/" style="float:left;">
-            <a-select show-search :value="defaultServiceOption" style="width: 300px" :options="serviceOptions"
+            <a-select show-search :value="defaultServiceOption" class="group-select" :options="serviceOptions"
               optionFilterProp="children" @change="serviceChange">
             </a-select>
-          </a>
-        </div>
-        <div class="knife4j-logo" key="logo" v-if="collapsed && settings.enableGroup">
-          <a to="/" style="float:left;" v-if="collapsed">
-            <img :src="logo" alt="logo" />
-          </a>
         </div>
         <div :class="settings.enableGroup ? 'knife4j-menu' : 'knife4j-menu-all'">
           <a-menu key="Menu" theme="dark" mode="inline" :inlineCollapsed="collapsed" @openChange="handleOpenChange"
@@ -22,9 +15,8 @@
           </a-menu>
         </div>
       </a-layout-sider>
-      <!-- <SiderMenu :defaultOption="defaultServiceOption" :serviceOptions="serviceOptions" @menuClick='menuClick' :logo="logo" :menuData="MenuData" :collapsed="collapsed" :location="$route" :onCollapse="handleMenuCollapse" :menuWidth="menuWidth" /> -->
       <a-layout>
-        <a-layout-header style="padding: 0;background: #fff;    height: 56px; line-height: 56px;">
+        <a-layout-header>
           <GlobalHeader @searchKey="searchKey" @searchClear="searchClear" :documentTitle="documentTitle"
             :collapsed="collapsed" :headerClass="headerClass" :currentUser="currentUser" :onCollapse="handleMenuCollapse"
             :onMenuClick="item => handleMenuClick(item)" />
@@ -1064,4 +1056,12 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.group-select{
+  margin-top:20px;
+  display:block;
+  width:80%;
+  margin:0 auto;
+  border-radius:20px;
+}
+</style>

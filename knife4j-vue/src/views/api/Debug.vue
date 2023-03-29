@@ -1035,7 +1035,7 @@ export default {
     },
     hideDynamicParameterTable() {
       // 如果当前确定未开启动态参数调试,且参数为0的情况下,关闭table 的参数显示
-      if (!this.enableDynamicParameter) {
+      
         // 关闭header
         if (this.headerData.length == 0) {
           this.headerTableFlag = false;
@@ -1060,7 +1060,6 @@ export default {
         } else {
           this.rawFormTableFlag = true;
         }
-      }
       this.initSelectionHeaders();
       // 计算heaer数量
       this.headerResetCalc();
