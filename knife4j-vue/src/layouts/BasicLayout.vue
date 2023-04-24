@@ -1,35 +1,92 @@
 <template>
   <div class="BasicLayout">
     <a-layout class="ant-layout-has-sider">
-      <a-layout-sider :trigger="null" collapsible :collapsed="collapsed" breakpoint="lg" @collapse="handleMenuCollapse"
-        :width="menuWidth" class="sider">
-        <div class="knife4j-logo-data" key="logo" v-if="!collapsed && settings.enableGroup">
-            <a-select show-search :value="defaultServiceOption" class="group-select" :options="serviceOptions"
-              optionFilterProp="children" @change="serviceChange">
+      <a-layout-sider
+        :trigger="null"
+        theme="light"
+        collapsible
+        :collapsed="collapsed"
+        breakpoint="lg"
+        @collapse="handleMenuCollapse"
+        :width="menuWidth"
+        class="sider"
+      >
+        <div
+          :class="settings.enableGroup ? 'knife4j-menu' : 'knife4j-menu-all'"
+        >
+          <div
+            class="knife4j-logo-data"
+            key="logo"
+            v-if="!collapsed && settings.enableGroup"
+          >
+            <a-select
+              show-search
+              :value="defaultServiceOption"
+              class="group-select"
+              :options="serviceOptions"
+              optionFilterProp="children"
+              @change="serviceChange"
+            >
             </a-select>
-        </div>
-        <div :class="settings.enableGroup ? 'knife4j-menu' : 'knife4j-menu-all'">
-          <a-menu key="Menu" theme="dark" mode="inline" :inlineCollapsed="collapsed" @openChange="handleOpenChange"
-            @select="selected" :openKeys="openKeys" :selectedKeys="selectedKeys" style="padding: 2px 0; width: 100%">
+          </div>
+          <a-menu
+            key="Menu"
+            mode="inline"
+            :inlineCollapsed="collapsed"
+            @openChange="handleOpenChange"
+            @select="selected"
+            :openKeys="openKeys"
+            :selectedKeys="selectedKeys"
+          >
             <ThreeMenu :menuData="localMenuData" :collapsed="collapsed" />
           </a-menu>
         </div>
       </a-layout-sider>
       <a-layout>
-        <a-layout-header>
-          <GlobalHeader @searchKey="searchKey" @searchClear="searchClear" :documentTitle="documentTitle"
-            :collapsed="collapsed" :headerClass="headerClass" :currentUser="currentUser" :onCollapse="handleMenuCollapse"
-            :onMenuClick="item => handleMenuClick(item)" />
+        <a-layout-header style="background-color: #fff">
+          <GlobalHeader
+            @searchKey="searchKey"
+            @searchClear="searchClear"
+            :documentTitle="documentTitle"
+            :collapsed="collapsed"
+            :headerClass="headerClass"
+            :currentUser="currentUser"
+            :onCollapse="handleMenuCollapse"
+            :onMenuClick="(item) => handleMenuClick(item)"
+          >
+            ></GlobalHeader
+          >
         </a-layout-header>
-        <context-menu :itemList="menuItemList" :visible.sync="menuVisible" @select="onMenuSelect" />
-        <a-tabs hideAdd v-model="activeKey" @contextmenu.native="e => onContextmenu(e)" type="editable-card"
-          @change="tabChange" @edit="tabEditCallback" class="knife4j-tab">
-          <a-tab-pane v-for="pane in panels" :key="pane.key" :closable="pane.closable">
-            <span slot="tab" :pagekey="pane.key">{{ pane.title }}</span>
-            <component :is="pane.content" :data="pane" @childrenMethods="childrenEmitMethod">
-            </component>
-          </a-tab-pane>
-        </a-tabs>
+        <context-menu
+          :itemList="menuItemList"
+          :visible.sync="menuVisible"
+          @select="onMenuSelect"
+        />
+        <a-layout-content style="padding:8px 8px;">
+          <a-tabs
+            hideAdd
+            v-model="activeKey"
+            @contextmenu.native="(e) => onContextmenu(e)"
+            type="editable-card"
+            @change="tabChange"
+            @edit="tabEditCallback"
+            style="background-color:#fff;"
+          >
+            <a-tab-pane
+              v-for="pane in panels"
+              :key="pane.key"
+              :closable="pane.closable"
+            >
+              <span slot="tab" :pagekey="pane.key">{{ pane.title }}</span>
+              <component
+                :is="pane.content"
+                :data="pane"
+                @childrenMethods="childrenEmitMethod"
+              >
+              </component>
+            </a-tab-pane>
+          </a-tabs>
+        </a-layout-content>
         <a-layout-footer style="padding: 0">
           <GlobalFooter />
         </a-layout-footer>
@@ -49,7 +106,7 @@ import KUtils from "@/core/utils";
 import SwaggerBootstrapUi from "@/core/Knife4jAsync.js";
 import {
   findComponentsByPath,
-  findMenuByKey
+  findMenuByKey,
 } from "@/components/utils/Knife4jUtils";
 import { urlToList } from "@/components/utils/pathTools";
 import ThreeMenu from "@/components/SiderMenu/ThreeMenu";
@@ -67,7 +124,7 @@ export default {
     GlobalFooter,
     GlobalHeaderTab,
     ContextMenu,
-    ThreeMenu
+    ThreeMenu,
   },
   data() {
     return {
@@ -89,14 +146,12 @@ export default {
       status: false,
       firstLoad: true,
       menuVisible: false,
-      nextUrl: '',
-      nextKey: '',
-      menuItemList: [
-
-      ]
+      nextUrl: "",
+      nextKey: "",
+      menuItemList: [],
     };
   },
-  beforeCreate() { },
+  beforeCreate() {},
   created() {
     //this.initSpringDocOpenApi();
     this.initKnife4jSpringUi();
@@ -104,7 +159,6 @@ export default {
     //this.initKnife4jJFinal();
     //this.initKnife4jFront();
     this.initI18n();
-
   },
   computed: {
     currentUser() {
@@ -112,15 +166,18 @@ export default {
     },
     cacheMenuData() {
       return this.$store.state.globals.currentMenuData;
-    }, currentMenuData() {
+    },
+    currentMenuData() {
       return this.$store.state.globals.currentMenuData;
     },
     language() {
       return this.$store.state.globals.language;
-    }, MenuData() {
+    },
+    MenuData() {
       //console.log("menuData--------------------------------")
       return this.$store.state.globals.currentMenuData;
-    }, swagger() {
+    },
+    swagger() {
       return this.$store.state.globals.swagger;
     },
     swaggerCurrentInstance() {
@@ -131,19 +188,18 @@ export default {
     },
     defaultServiceOption() {
       return this.$store.state.globals.defaultServiceOption;
-    }, settings() {
+    },
+    settings() {
       return this.$store.state.globals.settings;
-    }
+    },
   },
   updated() {
     this.openDefaultTabByPath();
 
     //this.selectDefaultMenu();
   },
-  beforeMount() {
-  },
+  beforeMount() {},
   mounted() {
-
     //this.selectDefaultMenu();
   },
   watch: {
@@ -164,7 +220,7 @@ export default {
     },
     MenuData() {
       this.localMenuData = this.$store.state.globals.currentMenuData;
-    }
+    },
   },
   methods: {
     getCurrentI18nInstance() {
@@ -180,18 +236,18 @@ export default {
       //根据i18n的切换,更新菜单的显示
       //console.log("根据i18n的切换,更新菜单的显示")
       if (KUtils.arrNotEmpty(this.MenuData)) {
-        this.MenuData.forEach(m => {
+        this.MenuData.forEach((m) => {
           if (KUtils.checkUndefined(m.i18n)) {
             m.name = this.getCurrentI18nInstance().menu[m.i18n];
             if (KUtils.arrNotEmpty(m.children)) {
-              m.children.forEach(cm => {
+              m.children.forEach((cm) => {
                 if (KUtils.checkUndefined(cm.i18n)) {
                   cm.name = this.getCurrentI18nInstance().menu[cm.i18n];
                 }
-              })
+              });
             }
           }
-        })
+        });
       }
     },
     getPlusStatus() {
@@ -220,17 +276,18 @@ export default {
       }
       return {
         include: include,
-        i18n: i18n
-      }
+        i18n: i18n,
+      };
     },
     getCacheSettings(val) {
       var that = this;
       var defaultSettings = constant.defaultSettings;
       var defaultPlusSettings = constant.defaultPlusSettings;
       var settings = null;
-      if (val != undefined && val != null && val != '') {
+      if (val != undefined && val != null && val != "") {
         if (that.plus) {
-          val.enableSwaggerBootstrapUi = defaultPlusSettings.enableSwaggerBootstrapUi
+          val.enableSwaggerBootstrapUi =
+            defaultPlusSettings.enableSwaggerBootstrapUi;
           val.enableRequestCache = defaultPlusSettings.enableRequestCache;
         } //如果本地存在,则使用本地的
         //这里有问题
@@ -261,68 +318,74 @@ export default {
       var tmpI18n = i18nParams.i18n;
       //console.log(tmpI18n)
       //读取settings
-      this.$localStore.getItem(constant.globalSettingsKey).then(settingCache => {
-        var settings = this.getCacheSettings(settingCache);
-        //console.log("layout---")
-        //console.log(settings)
-        //重新赋值是否开启增强
-        if (!settings.enableSwaggerBootstrapUi) {
-          settings.enableSwaggerBootstrapUi = this.getPlusStatus();
-        }
-        settings.language = tmpI18n;
-        that.$localStore.setItem(constant.globalSettingsKey, settings);
-        this.$localStore.getItem(constant.globalGitApiVersionCaches).then(gitVal => {
-          var cacheApis = this.getCacheGitVersion(gitVal);
-          if (i18nParams.include) {
-            //写入本地缓存
-            this.$store.dispatch("globals/setLang", tmpI18n);
-            this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
-            this.$i18n.locale = tmpI18n;
-            this.enableVersion = settings.enableVersion;
-            this.initSwagger({
-              springdoc: true,
-              baseSpringFox: true,
-              store: this.$store,
-              localStore: this.$localStore,
-              settings: settings,
-              cacheApis: cacheApis,
-              routeParams: that.$route.params,
-              plus: this.getPlusStatus(),
-              i18n: tmpI18n,
-              i18nVue: this.$i18n,
-              i18nFlag: i18nParams.include,
-              configSupport: false,
-              i18nInstance: this.getCurrentI18nInstance()
-            })
-          } else {
-            //不包含
-            //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
-            this.$localStore.getItem(constant.globalI18nCache).then(i18n => {
-              if (KUtils.checkUndefined(i18n)) {
-                this.$store.dispatch("globals/setLang", i18n);
-                tmpI18n = i18n;
-              }
-              this.$i18n.locale = tmpI18n;
-              this.enableVersion = settings.enableVersion;
-              this.initSwagger({
-                springdoc: true,
-                baseSpringFox: true,
-                store: this.$store,
-                localStore: this.$localStore,
-                settings: settings,
-                cacheApis: cacheApis,
-                routeParams: that.$route.params,
-                plus: this.getPlusStatus(),
-                i18n: tmpI18n,
-                i18nVue: this.$i18n,
-                i18nFlag: i18nParams.include,
-                configSupport: false,
-                i18nInstance: this.getCurrentI18nInstance()
-              })
-            })
+      this.$localStore
+        .getItem(constant.globalSettingsKey)
+        .then((settingCache) => {
+          var settings = this.getCacheSettings(settingCache);
+          //console.log("layout---")
+          //console.log(settings)
+          //重新赋值是否开启增强
+          if (!settings.enableSwaggerBootstrapUi) {
+            settings.enableSwaggerBootstrapUi = this.getPlusStatus();
           }
-        })
-      })
+          settings.language = tmpI18n;
+          that.$localStore.setItem(constant.globalSettingsKey, settings);
+          this.$localStore
+            .getItem(constant.globalGitApiVersionCaches)
+            .then((gitVal) => {
+              var cacheApis = this.getCacheGitVersion(gitVal);
+              if (i18nParams.include) {
+                //写入本地缓存
+                this.$store.dispatch("globals/setLang", tmpI18n);
+                this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
+                this.$i18n.locale = tmpI18n;
+                this.enableVersion = settings.enableVersion;
+                this.initSwagger({
+                  springdoc: true,
+                  baseSpringFox: true,
+                  store: this.$store,
+                  localStore: this.$localStore,
+                  settings: settings,
+                  cacheApis: cacheApis,
+                  routeParams: that.$route.params,
+                  plus: this.getPlusStatus(),
+                  i18n: tmpI18n,
+                  i18nVue: this.$i18n,
+                  i18nFlag: i18nParams.include,
+                  configSupport: false,
+                  i18nInstance: this.getCurrentI18nInstance(),
+                });
+              } else {
+                //不包含
+                //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
+                this.$localStore
+                  .getItem(constant.globalI18nCache)
+                  .then((i18n) => {
+                    if (KUtils.checkUndefined(i18n)) {
+                      this.$store.dispatch("globals/setLang", i18n);
+                      tmpI18n = i18n;
+                    }
+                    this.$i18n.locale = tmpI18n;
+                    this.enableVersion = settings.enableVersion;
+                    this.initSwagger({
+                      springdoc: true,
+                      baseSpringFox: true,
+                      store: this.$store,
+                      localStore: this.$localStore,
+                      settings: settings,
+                      cacheApis: cacheApis,
+                      routeParams: that.$route.params,
+                      plus: this.getPlusStatus(),
+                      i18n: tmpI18n,
+                      i18nVue: this.$i18n,
+                      i18nFlag: i18nParams.include,
+                      configSupport: false,
+                      i18nInstance: this.getCurrentI18nInstance(),
+                    });
+                  });
+              }
+            });
+        });
     },
     initKnife4jSpringUi() {
       //该版本是最终打包到knife4j-spring-ui的模块,默认是调用该方法
@@ -331,159 +394,171 @@ export default {
       var tmpI18n = i18nParams.i18n;
       //console.log(tmpI18n)
       //读取settings
-      this.$localStore.getItem(constant.globalSettingsKey).then(settingCache => {
-        var settings = this.getCacheSettings(settingCache);
-        //console.log("layout---")
-        //console.log(settings)
-        //重新赋值是否开启增强
-        if (!settings.enableSwaggerBootstrapUi) {
-          settings.enableSwaggerBootstrapUi = this.getPlusStatus();
-        }
-        settings.language = tmpI18n;
-        that.$localStore.setItem(constant.globalSettingsKey, settings);
-        this.$localStore.getItem(constant.globalGitApiVersionCaches).then(gitVal => {
-          var cacheApis = this.getCacheGitVersion(gitVal);
-          if (i18nParams.include) {
-            //写入本地缓存
-            this.$store.dispatch("globals/setLang", tmpI18n);
-            this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
-            this.$i18n.locale = tmpI18n;
-            this.enableVersion = settings.enableVersion;
-            this.initSwagger({
-              baseSpringFox: true,
-              store: this.$store,
-              localStore: this.$localStore,
-              settings: settings,
-              cacheApis: cacheApis,
-              routeParams: that.$route.params,
-              plus: this.getPlusStatus(),
-              i18n: tmpI18n,
-              i18nVue: this.$i18n,
-              i18nFlag: i18nParams.include,
-              configSupport: false,
-              desktop: true,
-              i18nInstance: this.getCurrentI18nInstance()
-            })
-          } else {
-            //不包含
-            //console.log("不包含")
-            //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
-            this.$localStore.getItem(constant.globalI18nCache).then(i18n => {
-              if (KUtils.checkUndefined(i18n)) {
-                this.$store.dispatch("globals/setLang", i18n);
-                tmpI18n = i18n;
-              }
-              this.$i18n.locale = tmpI18n;
-              this.enableVersion = settings.enableVersion;
-              this.initSwagger({
-                //url: "/services.json",
-                baseSpringFox: true,
-                store: this.$store,
-                localStore: this.$localStore,
-                settings: settings,
-                cacheApis: cacheApis,
-                routeParams: that.$route.params,
-                plus: this.getPlusStatus(),
-                i18n: tmpI18n,
-                i18nVue: this.$i18n,
-                i18nFlag: i18nParams.include,
-                configSupport: false,
-                desktop: true,
-                i18nInstance: this.getCurrentI18nInstance()
-              })
-            })
+      this.$localStore
+        .getItem(constant.globalSettingsKey)
+        .then((settingCache) => {
+          var settings = this.getCacheSettings(settingCache);
+          //console.log("layout---")
+          //console.log(settings)
+          //重新赋值是否开启增强
+          if (!settings.enableSwaggerBootstrapUi) {
+            settings.enableSwaggerBootstrapUi = this.getPlusStatus();
           }
-        })
-      })
+          settings.language = tmpI18n;
+          that.$localStore.setItem(constant.globalSettingsKey, settings);
+          this.$localStore
+            .getItem(constant.globalGitApiVersionCaches)
+            .then((gitVal) => {
+              var cacheApis = this.getCacheGitVersion(gitVal);
+              if (i18nParams.include) {
+                //写入本地缓存
+                this.$store.dispatch("globals/setLang", tmpI18n);
+                this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
+                this.$i18n.locale = tmpI18n;
+                this.enableVersion = settings.enableVersion;
+                this.initSwagger({
+                  baseSpringFox: true,
+                  store: this.$store,
+                  localStore: this.$localStore,
+                  settings: settings,
+                  cacheApis: cacheApis,
+                  routeParams: that.$route.params,
+                  plus: this.getPlusStatus(),
+                  i18n: tmpI18n,
+                  i18nVue: this.$i18n,
+                  i18nFlag: i18nParams.include,
+                  configSupport: false,
+                  desktop: true,
+                  i18nInstance: this.getCurrentI18nInstance(),
+                });
+              } else {
+                //不包含
+                //console.log("不包含")
+                //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
+                this.$localStore
+                  .getItem(constant.globalI18nCache)
+                  .then((i18n) => {
+                    if (KUtils.checkUndefined(i18n)) {
+                      this.$store.dispatch("globals/setLang", i18n);
+                      tmpI18n = i18n;
+                    }
+                    this.$i18n.locale = tmpI18n;
+                    this.enableVersion = settings.enableVersion;
+                    this.initSwagger({
+                      //url: "/services.json",
+                      baseSpringFox: true,
+                      store: this.$store,
+                      localStore: this.$localStore,
+                      settings: settings,
+                      cacheApis: cacheApis,
+                      routeParams: that.$route.params,
+                      plus: this.getPlusStatus(),
+                      i18n: tmpI18n,
+                      i18nVue: this.$i18n,
+                      i18nFlag: i18nParams.include,
+                      configSupport: false,
+                      desktop: true,
+                      i18nInstance: this.getCurrentI18nInstance(),
+                    });
+                  });
+              }
+            });
+        });
     },
     initKnife4jDemoDoc() {
-      window.console.log("231")
+      window.console.log("231");
       //该版本是最终打包到knife4j-spring-ui的模块,默认是调用该方法
       var that = this;
       var i18nParams = this.getI18nFromUrl();
       var tmpI18n = i18nParams.i18n;
       //console.log(tmpI18n)
       //读取settings
-      this.$localStore.getItem(constant.globalSettingsKey).then(settingCache => {
-        var settings = this.getCacheSettings(settingCache);
-        //console.log("layout---")
-        //console.log(settings)
-        //重新赋值是否开启增强
-        if (!settings.enableSwaggerBootstrapUi) {
-          settings.enableSwaggerBootstrapUi = this.getPlusStatus();
-        }
-        settings.language = tmpI18n;
-        that.$localStore.setItem(constant.globalSettingsKey, settings);
-        this.$localStore.getItem(constant.globalGitApiVersionCaches).then(gitVal => {
-          var cacheApis = this.getCacheGitVersion(gitVal);
-          if (i18nParams.include) {
-            //写入本地缓存
-            this.$store.dispatch("globals/setLang", tmpI18n);
-            this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
-            this.$i18n.locale = tmpI18n;
-            this.enableVersion = settings.enableVersion;
-            let _winLocation = window.location;
-            window.console.log(_winLocation)
-            let _demoCode = KUtils.getLocationParams('code');
-            debugger
-            window.console.log("project-demo-code:" + _demoCode);
-            let _url = "/demo/data/" + _demoCode + ".json";
-            window.console.log("url:" + _url);
-            this.initSwagger({
-              url: "/demo/data/openapi.json",
-              baseSpringFox: true,
-              store: this.$store,
-              localStore: this.$localStore,
-              settings: settings,
-              cacheApis: cacheApis,
-              routeParams: that.$route.params,
-              plus: this.getPlusStatus(),
-              i18n: tmpI18n,
-              i18nVue: this.$i18n,
-              i18nFlag: i18nParams.include,
-              configSupport: false,
-              desktop: true,
-              i18nInstance: this.getCurrentI18nInstance()
-            })
-          } else {
-            //不包含
-            //console.log("不包含")
-            //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
-            this.$localStore.getItem(constant.globalI18nCache).then(i18n => {
-              if (KUtils.checkUndefined(i18n)) {
-                this.$store.dispatch("globals/setLang", i18n);
-                tmpI18n = i18n;
-              }
-              this.$i18n.locale = tmpI18n;
-              this.enableVersion = settings.enableVersion;
-
-              let _winLocation = window.location;
-              window.console.log(_winLocation)
-              let _demoCode = KUtils.getLocationParams('code');
-              debugger
-              window.console.log("project-demo-code:" + _demoCode);
-              let _url = "/demo/data/" + _demoCode + ".json";
-              window.console.log("url:" + _url);
-              this.initSwagger({
-                url: "/demo/data/openapi.json",
-                baseSpringFox: true,
-                store: this.$store,
-                localStore: this.$localStore,
-                settings: settings,
-                cacheApis: cacheApis,
-                routeParams: that.$route.params,
-                plus: this.getPlusStatus(),
-                i18n: tmpI18n,
-                i18nVue: this.$i18n,
-                i18nFlag: i18nParams.include,
-                configSupport: false,
-                desktop: true,
-                i18nInstance: this.getCurrentI18nInstance()
-              })
-            })
+      this.$localStore
+        .getItem(constant.globalSettingsKey)
+        .then((settingCache) => {
+          var settings = this.getCacheSettings(settingCache);
+          //console.log("layout---")
+          //console.log(settings)
+          //重新赋值是否开启增强
+          if (!settings.enableSwaggerBootstrapUi) {
+            settings.enableSwaggerBootstrapUi = this.getPlusStatus();
           }
-        })
-      })
+          settings.language = tmpI18n;
+          that.$localStore.setItem(constant.globalSettingsKey, settings);
+          this.$localStore
+            .getItem(constant.globalGitApiVersionCaches)
+            .then((gitVal) => {
+              var cacheApis = this.getCacheGitVersion(gitVal);
+              if (i18nParams.include) {
+                //写入本地缓存
+                this.$store.dispatch("globals/setLang", tmpI18n);
+                this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
+                this.$i18n.locale = tmpI18n;
+                this.enableVersion = settings.enableVersion;
+                let _winLocation = window.location;
+                window.console.log(_winLocation);
+                let _demoCode = KUtils.getLocationParams("code");
+                debugger;
+                window.console.log("project-demo-code:" + _demoCode);
+                let _url = "/demo/data/" + _demoCode + ".json";
+                window.console.log("url:" + _url);
+                this.initSwagger({
+                  url: "/demo/data/openapi.json",
+                  baseSpringFox: true,
+                  store: this.$store,
+                  localStore: this.$localStore,
+                  settings: settings,
+                  cacheApis: cacheApis,
+                  routeParams: that.$route.params,
+                  plus: this.getPlusStatus(),
+                  i18n: tmpI18n,
+                  i18nVue: this.$i18n,
+                  i18nFlag: i18nParams.include,
+                  configSupport: false,
+                  desktop: true,
+                  i18nInstance: this.getCurrentI18nInstance(),
+                });
+              } else {
+                //不包含
+                //console.log("不包含")
+                //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
+                this.$localStore
+                  .getItem(constant.globalI18nCache)
+                  .then((i18n) => {
+                    if (KUtils.checkUndefined(i18n)) {
+                      this.$store.dispatch("globals/setLang", i18n);
+                      tmpI18n = i18n;
+                    }
+                    this.$i18n.locale = tmpI18n;
+                    this.enableVersion = settings.enableVersion;
+
+                    let _winLocation = window.location;
+                    window.console.log(_winLocation);
+                    let _demoCode = KUtils.getLocationParams("code");
+                    debugger;
+                    window.console.log("project-demo-code:" + _demoCode);
+                    let _url = "/demo/data/" + _demoCode + ".json";
+                    window.console.log("url:" + _url);
+                    this.initSwagger({
+                      url: "/demo/data/openapi.json",
+                      baseSpringFox: true,
+                      store: this.$store,
+                      localStore: this.$localStore,
+                      settings: settings,
+                      cacheApis: cacheApis,
+                      routeParams: that.$route.params,
+                      plus: this.getPlusStatus(),
+                      i18n: tmpI18n,
+                      i18nVue: this.$i18n,
+                      i18nFlag: i18nParams.include,
+                      configSupport: false,
+                      desktop: true,
+                      i18nInstance: this.getCurrentI18nInstance(),
+                    });
+                  });
+              }
+            });
+        });
     },
     initKnife4jJFinal() {
       //该版本是最终打包到knife4j-jfinal-ui的模块,默认是调用该方法
@@ -492,69 +567,75 @@ export default {
       var tmpI18n = i18nParams.i18n;
       //console.log(tmpI18n)
       //读取settings
-      this.$localStore.getItem(constant.globalSettingsKey).then(settingCache => {
-        var settings = this.getCacheSettings(settingCache);
-        //console.log("layout---")
-        //console.log(settings)
-        //重新赋值是否开启增强
-        if (!settings.enableSwaggerBootstrapUi) {
-          settings.enableSwaggerBootstrapUi = this.getPlusStatus();
-        }
-        settings.language = tmpI18n;
-        that.$localStore.setItem(constant.globalSettingsKey, settings);
-        this.$localStore.getItem(constant.globalGitApiVersionCaches).then(gitVal => {
-          var cacheApis = this.getCacheGitVersion(gitVal);
-          if (i18nParams.include) {
-            //写入本地缓存
-            this.$store.dispatch("globals/setLang", tmpI18n);
-            this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
-            this.$i18n.locale = tmpI18n;
-            this.enableVersion = settings.enableVersion;
-            this.initSwagger({
-              baseSpringFox: true,
-              store: this.$store,
-              localStore: this.$localStore,
-              settings: settings,
-              cacheApis: cacheApis,
-              routeParams: that.$route.params,
-              plus: this.getPlusStatus(),
-              i18n: tmpI18n,
-              url: 'jf-swagger/swagger-resources',
-              i18nVue: this.$i18n,
-              i18nFlag: i18nParams.include,
-              configSupport: false,
-              i18nInstance: this.getCurrentI18nInstance()
-            })
-          } else {
-            //不包含
-            //console.log("不包含")
-            //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
-            this.$localStore.getItem(constant.globalI18nCache).then(i18n => {
-              if (KUtils.checkUndefined(i18n)) {
-                this.$store.dispatch("globals/setLang", i18n);
-                tmpI18n = i18n;
-              }
-              this.$i18n.locale = tmpI18n;
-              this.enableVersion = settings.enableVersion;
-              this.initSwagger({
-                baseSpringFox: true,
-                store: this.$store,
-                localStore: this.$localStore,
-                settings: settings,
-                cacheApis: cacheApis,
-                routeParams: that.$route.params,
-                plus: this.getPlusStatus(),
-                i18n: tmpI18n,
-                url: 'jf-swagger/swagger-resources',
-                i18nVue: this.$i18n,
-                i18nFlag: i18nParams.include,
-                configSupport: false,
-                i18nInstance: this.getCurrentI18nInstance()
-              })
-            })
+      this.$localStore
+        .getItem(constant.globalSettingsKey)
+        .then((settingCache) => {
+          var settings = this.getCacheSettings(settingCache);
+          //console.log("layout---")
+          //console.log(settings)
+          //重新赋值是否开启增强
+          if (!settings.enableSwaggerBootstrapUi) {
+            settings.enableSwaggerBootstrapUi = this.getPlusStatus();
           }
-        })
-      })
+          settings.language = tmpI18n;
+          that.$localStore.setItem(constant.globalSettingsKey, settings);
+          this.$localStore
+            .getItem(constant.globalGitApiVersionCaches)
+            .then((gitVal) => {
+              var cacheApis = this.getCacheGitVersion(gitVal);
+              if (i18nParams.include) {
+                //写入本地缓存
+                this.$store.dispatch("globals/setLang", tmpI18n);
+                this.$localStore.setItem(constant.globalI18nCache, tmpI18n);
+                this.$i18n.locale = tmpI18n;
+                this.enableVersion = settings.enableVersion;
+                this.initSwagger({
+                  baseSpringFox: true,
+                  store: this.$store,
+                  localStore: this.$localStore,
+                  settings: settings,
+                  cacheApis: cacheApis,
+                  routeParams: that.$route.params,
+                  plus: this.getPlusStatus(),
+                  i18n: tmpI18n,
+                  url: "jf-swagger/swagger-resources",
+                  i18nVue: this.$i18n,
+                  i18nFlag: i18nParams.include,
+                  configSupport: false,
+                  i18nInstance: this.getCurrentI18nInstance(),
+                });
+              } else {
+                //不包含
+                //console.log("不包含")
+                //初始化读取i18n的配置，add by xiaoymin 2020-5-16 09:51:51
+                this.$localStore
+                  .getItem(constant.globalI18nCache)
+                  .then((i18n) => {
+                    if (KUtils.checkUndefined(i18n)) {
+                      this.$store.dispatch("globals/setLang", i18n);
+                      tmpI18n = i18n;
+                    }
+                    this.$i18n.locale = tmpI18n;
+                    this.enableVersion = settings.enableVersion;
+                    this.initSwagger({
+                      baseSpringFox: true,
+                      store: this.$store,
+                      localStore: this.$localStore,
+                      settings: settings,
+                      cacheApis: cacheApis,
+                      routeParams: that.$route.params,
+                      plus: this.getPlusStatus(),
+                      i18n: tmpI18n,
+                      url: "jf-swagger/swagger-resources",
+                      i18nVue: this.$i18n,
+                      i18nFlag: i18nParams.include,
+                      configSupport: false,
+                      i18nInstance: this.getCurrentI18nInstance(),
+                    });
+                  });
+              }
+            });
+        });
     },
     initKnife4jFront() {
       //该版本区别于Spring-ui的版本,提供给其它语言来集成knife4j
@@ -570,7 +651,7 @@ export default {
         configSupport: false,
         i18nInstance: this.getCurrentI18nInstance(),
         //覆盖url地址,多个服务的组合
-        url: "/services.json"
+        url: "/services.json",
       };
       this.initSwagger(swaggerOptions);
     },
@@ -614,16 +695,16 @@ export default {
         var regx = ".*?" + key + ".*";
         //console.log(this.cacheMenuData);
         this.cacheMenuData.forEach(function (menu) {
-          console.log(menu)
+          console.log(menu);
           //遍历children
           var tmpChildrens = [];
           let _tagNameFlag = KUtils.searchMatch(regx, menu.name);
           if (_tagNameFlag) {
             //tag名称符合要求，直接add
             if (KUtils.arrNotEmpty(menu.children)) {
-              menu.children.forEach(children => {
+              menu.children.forEach((children) => {
                 tmpChildrens.push(children);
-              })
+              });
             }
           } else {
             if (KUtils.arrNotEmpty(menu.children)) {
@@ -647,9 +728,9 @@ export default {
               path: menu.path,
               hasNew: menu.hasNew,
               authority: menu.authority,
-              children: tmpChildrens
+              children: tmpChildrens,
             };
-            if (tmpMenu.filter(t => t.key === tmpObj.key).length == 0) {
+            if (tmpMenu.filter((t) => t.key === tmpObj.key).length == 0) {
               tmpMenu.push(tmpObj);
             }
           }
@@ -663,7 +744,7 @@ export default {
       //id
       let swaggerIns = this.swagger.selectInstanceByGroupId(value);
       this.swagger.analysisApi(swaggerIns);
-      this.$store.dispatch('globals/setDefaultService', value);
+      this.$store.dispatch("globals/setDefaultService", value);
       //this.defaultServiceOption = value;
       //console(value);
       //console(option);
@@ -811,7 +892,7 @@ export default {
       var menu = findComponentsByPath(url, this.swagger.globalMenuDatas);
       if (menu != null) {
         //判断是否已经默认打开了主页面板
-        const indexSize = this.panels.filter(tab => tab.key == "kmain");
+        const indexSize = this.panels.filter((tab) => tab.key == "kmain");
         if (indexSize == 0) {
           panes.push({
             /* title: "主页", */
@@ -820,11 +901,11 @@ export default {
             content: "Main",
             key: "kmain",
             instance: this.swaggerCurrentInstance,
-            closable: false
+            closable: false,
           });
           this.linkList.push("kmain");
         }
-        const tabKeys = panes.map(tab => tab.key);
+        const tabKeys = panes.map((tab) => tab.key);
         let openMenuFlag = false;
 
         //判断tab是否已加载
@@ -837,7 +918,7 @@ export default {
             content: menu.component,
             key: menu.key,
             instance: this.swaggerCurrentInstance,
-            closable: menu.key != "kmain"
+            closable: menu.key != "kmain",
           });
           this.linkList.push(menu.key);
           this.panels = panes;
@@ -860,14 +941,13 @@ export default {
       //this.watchPathMenuSelect();
     },
     freePanelMemory(activeKey) {
-      this.panels.forEach(panel => {
+      this.panels.forEach((panel) => {
         if (panel.key == activeKey) {
           panel.instance = this.swaggerCurrentInstance;
         } else {
           panel.instance = null;
         }
-      })
-
+      });
     },
     updateMainTabInstance() {
       var that = this;
@@ -937,7 +1017,7 @@ export default {
       //console(key);
       const panes = this.panels;
       //console(panes);
-      const tabKeys = this.panels.map(tab => tab.key);
+      const tabKeys = this.panels.map((tab) => tab.key);
       // var menu = findComponentsByPath(url, this.MenuData);
       var menu = findMenuByKey(key, this.MenuData);
       //console(menu);
@@ -949,7 +1029,7 @@ export default {
             title: menu.name,
             content: menu.component,
             key: menu.key,
-            closable: true
+            closable: true,
           });
           this.linkList.push(menu.key);
           this.panels = panes;
@@ -986,7 +1066,7 @@ export default {
           lastIndex = i - 1;
         }
       });
-      const panes = this.panels.filter(pane => pane.key !== targetKey);
+      const panes = this.panels.filter((pane) => pane.key !== targetKey);
       if (panes.length && activeKey === targetKey) {
         if (lastIndex >= 0) {
           activeKey = panes[lastIndex].key;
@@ -1051,17 +1131,17 @@ export default {
           this.openKeys = [m.key];
         }
       } */
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.group-select{
-  margin-top:20px;
-  display:block;
-  width:80%;
-  margin:0 auto;
-  border-radius:20px;
+.group-select {
+  margin-top: 20px;
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 20px;
 }
 </style>

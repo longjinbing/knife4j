@@ -1,5 +1,5 @@
 <template>
-  <div class="header knife4j-header-default" :class="headerClass">
+  <div>
     <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
     <span class="knife4j-header-title">{{ documentTitle }}</span>
 

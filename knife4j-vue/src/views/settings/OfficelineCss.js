@@ -94,11 +94,11 @@ export const resumecss = `
 }
 
 .knife4j-api-get {
-  border-color: #0059C6;
+  border-color: #025cbd;
   background: rgba(97, 175, 254, 0.1);
 }
 .knife4j-api-get .knife4j-api-summary-method {
-  background: #0059C6;
+  background: #025cbd;
 }
 .knife4j-api-head {
   border-color: #9012fe;
@@ -194,7 +194,7 @@ export const resumecss = `
   font-weight: 600;
   height: 30px;
   line-height: 30px;
-  border-left: 4px solid #0059C6;
+  border-left: 4px solid #025cbd;
   text-indent: 8px;
 }
 .content-line {

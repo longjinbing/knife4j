@@ -1,6 +1,6 @@
 <template>
   <a-layout-content class="knife4j-body-content">
-    <a-card :size="small" title="接口数量" :bordered=false>
+    <a-card :size="small" title="接口数量">
       <a-row :gutter="24">
         <a-col :span="6" v-for="param in swaggerCurrentInstance.pathArrs" :key="param.method" >
           <div class="card-content">
@@ -72,10 +72,6 @@ export default {
 .divider-count {
   margin: 8px 0;
 }
-.knife4j-body-content{
-  padding:24px;
-  background-color: rgb(240, 242, 245);
-}
 .card-title{
   line-height: 40px;
 }
@@ -100,7 +96,7 @@ export default {
   width: 100px;
   height:100px;
   border-radius: 50px;
-  background-color: #0059C6;
+  background-color: #025cbd;
   color: #fff;
   margin: auto;
   cursor:pointer

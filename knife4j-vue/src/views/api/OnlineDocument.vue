@@ -619,7 +619,7 @@ export default {
   font-weight: 600;
   height: 30px;
   line-height: 30px;
-  border-left: 4px solid #0059C6;
+  border-left: 4px solid #025cbd;
   text-indent: 8px;
 }
 

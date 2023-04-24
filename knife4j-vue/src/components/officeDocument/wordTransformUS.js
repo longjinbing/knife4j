@@ -73,7 +73,7 @@ function createWordHeader(markdownCollections) {
               font-weight: 600;
               font-size: 18px;
               margin-top: 15px;
-              border-left: 3px solid #0059C6;
+              border-left: 3px solid #025cbd;
           }
           .knife4j-word-api{
               margin-top: 10px;
