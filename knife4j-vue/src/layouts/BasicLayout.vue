@@ -2,11 +2,9 @@
   <div class="BasicLayout">
     <a-layout class="ant-layout-has-sider">
       <a-layout-sider
-        :trigger="null"
         theme="light"
         collapsible
         :collapsed="collapsed"
-        breakpoint="lg"
         @collapse="handleMenuCollapse"
         :width="menuWidth"
         class="sider"
@@ -37,6 +35,7 @@
             @select="selected"
             :openKeys="openKeys"
             :selectedKeys="selectedKeys"
+            size="small"
           >
             <ThreeMenu :menuData="localMenuData" :collapsed="collapsed" />
           </a-menu>
@@ -114,7 +113,7 @@ import ThreeMenu from "@/components/SiderMenu/ThreeMenu";
 import ContextMenu from "@/components/common/ContextMenu";
 import constant from "@/store/constants";
 
-const constMenuWidth = 320;
+const constMenuWidth = 240;
 
 export default {
   name: "BasicLayout",
@@ -1082,20 +1081,7 @@ export default {
       }
     },
     handleMenuCollapse(collapsed) {
-      const tmpColl = this.collapsed;
-      this.collapsed = !tmpColl;
-      //console("調用selectDefaultMenu");
-      this.selectDefaultMenu();
-      setTimeout(() => {
-        if (tmpColl) {
-          this.headerClass = "knife4j-header-width";
-          this.menuWidth = constMenuWidth;
-        } else {
-          this.headerClass = "knife4j-header-width-collapsed";
-          this.menuWidth = 80;
-          //this.openKeys = [""];
-        }
-      }, 10);
+      this.collapsed = !this.collapsed;
     },
     handleOpenChange(openKeys) {
       let keys;
